@@ -17,7 +17,11 @@
         <module>sky-pojo</module>
         <module>sky-server</module>
     </modules>
+
     <properties>
+        <!--解决无效的目标发行版：17.0.4.1-->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!--========================================================================-->
         <mybatis.spring>2.2.0</mybatis.spring>
         <lombok>1.18.20</lombok>
         <fastjson>1.2.76</fastjson>
@@ -31,8 +35,13 @@
         <jaxb-api>2.3.1</jaxb-api>
         <poi>3.16</poi>
     </properties>
+
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+            </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -111,6 +120,7 @@
                 <artifactId>poi</artifactId>
                 <version>${poi}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
@@ -122,6 +132,44 @@
                 <artifactId>wechatpay-apache-httpclient</artifactId>
                 <version>0.4.8</version>
             </dependency>
+               <!--接口文档生成swagger-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+<!--解决无效的目标发行版：17.0.4.1-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>${maven.compiler.encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+<!--
+cat > /var/www/html/config/database.php << EOF
+<?php
+return array(
+    'database' => array(
+        'type' => 'mysqli',
+        'host' => '47.115.219.46',
+        'user' => 'root',
+        'passwd' => '12345678',
+        'port' => '3306',
+        'dbname' => 'pbootcms'
+    )
+);
+EOF
+
+-->
 </project>
